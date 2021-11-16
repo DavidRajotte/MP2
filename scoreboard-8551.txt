@@ -1,0 +1,26 @@
+n = 8 b = 5 s = 5 t = 1
+Player 1: AI, d = 6 a = True
+Player 2: AI, d = 6 a = True
+
+10 games
+
+Total wins for heuristic e1: 0
+Total wins for heuristic e2: 0
+Ties: 10
+
+Results for heuristic e1
+
+i   Average evaluation time: 2.491269597616832e-07
+ii  Total heuristic evaluations: 8278517
+iii Evaluations by depth: 
+iv  Average evaluation depth: 
+v   Average recursion depth 
+vi Average moves per game: 59.0
+Results for heuristic e2
+
+i   Average evaluation time: 1.9095811635624204e-06
+ii  Total heuristic evaluations: 12776390
+iii Evaluations by depth: 
+iv  Average evaluation depth: 
+v   Average recursion depth 
+vi Average moves per game: 59.0
