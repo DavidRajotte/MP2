@@ -54,7 +54,7 @@ class Game:
 
 
     # Initialize the game
-    def initialize_game(self, get_input=False, recommend=True, n=3, b=0, s=3, d1=4, d2=4, t=10, a=True, player_x='AI', player_o='AI', h1='e1', h2='e2'):
+    def initialize_game(self, get_input=False, recommend=True, n=3, b=0, s=3, d1=4, d2=4, t=10, a=True, player_x='AI', player_o='AI', h1='e1', h2='e2', b_posi=[], b_posj=[]):
         self.player_turn = 'X'
         self.recommend = recommend
 
@@ -98,14 +98,22 @@ class Game:
 
             # Set blocs on game board
             self.b = b
-            for num in range(0, self.b):
-                while True:
-                    i = int(random.uniform(0, self.n))
-                    j = int(random.uniform(0, self.n))
-                    if self.is_valid_position(i, j):
-                        self.bloc_positions.append([F"({j}, {i})"])
-                        self.current_state[i][j] = '~'
-                        break
+            if b_posi == [] and b_posj == []:
+                for num in range(0, self.b):
+                    while True:
+                        i = int(random.uniform(0, self.n))
+                        j = int(random.uniform(0, self.n))
+                        if self.is_valid_position(i, j):
+                            self.bloc_positions.append([F"({j}, {i})"])
+                            self.current_state[i][j] = '~'
+                            break
+            else:
+                for n in range(0, b):
+                    i = b_posi[n]
+                    j = b_posj[n]
+                    self.bloc_positions.append([F"({j}, {i})"])
+                    self.current_state[i][j] = '~'
+
 
             # Set winning line up size
             self.s = s
@@ -770,6 +778,15 @@ class Game:
             else:
                 print(F'The row must be in range [0 - {self.n}]! Try again.')
 
+
+    def get_choice(self):
+        while True:
+            result = input("Play game (G) or run test (T): ")
+            if result == 'G' or result == 'T':
+                return result
+            else:
+                print('Input must be (T or F)! Try again.')
+
     # --------------------------------------------------------
     # Check for valid position
     # --------------------------------------------------------
@@ -784,57 +801,63 @@ def main():
     # Create game object
     game = Game()
 
-    # Initialize and play
-    game.initialize_game(n=4, b=4, s=3, t=5, d1=6, d2=6, a=False)
-    game.play_game_once()
+    result = game.get_choice()
 
-    game.initialize_game(n=4, b=4, s=3, t=1, d1=6, d2=6, a=True)
-    game.play_game_once()
+    if result == 'G':
+        game.initialize_game(get_input=True)
+        game.play_game_once()
+    else:
+        # Initialize and play
+        game.initialize_game(n=4, b=4, s=3, t=5, d1=6, d2=6, a=False, b_posi=[0, 0, 3, 3], b_posj=[0, 3, 0, 3])
+        game.play_game_once()
 
-    game.initialize_game(n=5, b=4, s=4, t=1, d1=6, d2=6, a=True)
-    game.play_game_once()
+        game.initialize_game(n=4, b=4, s=3, t=1, d1=6, d2=6, a=True, b_posi=[0, 0, 3, 3], b_posj=[0, 3, 0, 3])
+        game.play_game_once()
 
-    game.initialize_game(n=5, b=4, s=4, t=5, d1=6, d2=6, a=True)
-    game.play_game_once()
+        game.initialize_game(n=5, b=4, s=4, t=1, d1=6, d2=6, a=True)
+        game.play_game_once()
 
-    game.initialize_game(n=8, b=5, s=5, t=1, d1=6, d2=6, a=True)
-    game.play_game_once()
+        game.initialize_game(n=5, b=4, s=4, t=5, d1=6, d2=6, a=True)
+        game.play_game_once()
 
-    game.initialize_game(n=8, b=5, s=5, t=5, d1=6, d2=6, a=True)
-    game.play_game_once()
+        game.initialize_game(n=8, b=5, s=5, t=1, d1=6, d2=6, a=True)
+        game.play_game_once()
 
-    game.initialize_game(n=8, b=6, s=5, t=1, d1=6, d2=6, a=True)
-    game.play_game_once()
+        game.initialize_game(n=8, b=5, s=5, t=5, d1=6, d2=6, a=True)
+        game.play_game_once()
 
-    game.initialize_game(n=8, b=6, s=5, t=5, d1=6, d2=6, a=True)
-    game.play_game_once()
+        game.initialize_game(n=8, b=6, s=5, t=1, d1=6, d2=6, a=True)
+        game.play_game_once()
+
+        game.initialize_game(n=8, b=6, s=5, t=5, d1=6, d2=6, a=True)
+        game.play_game_once()
 
 
+        # Initialize and play multiple
+        game.initialize_game(n=4, b=4, s=3, t=5, d1=6, d2=6, a=False, b_posi=[0, 0, 3, 3], b_posj=[0, 3, 0, 3])
+        game.play_game_multiple()
 
-    # Initialize and play multiple
-    game.initialize_game(n=4, b=4, s=3, t=5, d1=6, d2=6, a=False)
-    game.play_game_multiple()
+        game.initialize_game(n=4, b=4, s=3, t=1, d1=6, d2=6, a=True, b_posi=[0, 0, 3, 3], b_posj=[0, 3, 0, 3])
+        game.play_game_multiple()
 
-    game.initialize_game(n=4, b=4, s=3, t=1, d1=6, d2=6, a=True)
-    game.play_game_multiple()
+        game.initialize_game(n=5, b=4, s=4, t=1, d1=6, d2=6, a=True)
+        game.play_game_multiple()
 
-    game.initialize_game(n=5, b=4, s=4, t=1, d1=6, d2=6, a=True)
-    game.play_game_multiple()
+        game.initialize_game(n=5, b=4, s=4, t=5, d1=6, d2=6, a=True)
+        game.play_game_multiple()
 
-    game.initialize_game(n=5, b=4, s=4, t=5, d1=6, d2=6, a=True)
-    game.play_game_multiple()
+        game.initialize_game(n=8, b=5, s=5, t=1, d1=6, d2=6, a=True)
+        game.play_game_multiple()
 
-    game.initialize_game(n=8, b=5, s=5, t=1, d1=6, d2=6, a=True)
-    game.play_game_multiple()
+        game.initialize_game(n=8, b=5, s=5, t=5, d1=6, d2=6, a=True)
+        game.play_game_multiple()
 
-    game.initialize_game(n=8, b=5, s=5, t=5, d1=6, d2=6, a=True)
-    game.play_game_multiple()
+        game.initialize_game(n=8, b=6, s=5, t=1, d1=6, d2=6, a=True)
+        game.play_game_multiple()
 
-    game.initialize_game(n=8, b=6, s=5, t=1, d1=6, d2=6, a=True)
-    game.play_game_multiple()
+        game.initialize_game(n=8, b=6, s=5, t=5, d1=6, d2=6, a=True)
+        game.play_game_multiple()
 
-    game.initialize_game(n=8, b=6, s=5, t=5, d1=6, d2=6, a=True)
-    game.play_game_multiple()
 
 if __name__ == "__main__":
     main()
