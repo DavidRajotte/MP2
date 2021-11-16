@@ -47,11 +47,8 @@ class Game:
     evaluation_time_e1 = 0
     evaluation_time_e2 = 0
 
-
     total_states_evaluated_e1 = 0
-
     total_states_evaluated_e2 = 0
-
 
     # Initialize the game
     def initialize_game(self, get_input=False, recommend=True, n=3, b=0, s=3, d1=4, d2=4, t=10, a=True, player_x='AI', player_o='AI', h1='e1', h2='e2', b_posi=[], b_posj=[]):
@@ -162,7 +159,6 @@ class Game:
 
     # ---------------------------------------------------------------
     # Check for win condition
-    # evaluation function (needs to be quick)
     # ---------------------------------------------------------------
     def is_end_state(self):
         # Horizontal win
@@ -182,10 +178,8 @@ class Game:
             elif self.win_o in ''.join(column):
                 return 'O'
 
-        # Get diagonals
-
+        # Diagonal win
         diag = [[self.current_state[i - j][j] for j in range(0, self.n) if 0 <= i - j < self.n] for i in range(0, 2 * self.n - 1)]
-
         for d in range(0, len(diag)):
             if self.win_x in ''.join(diag[d]):
                 return 'X'
@@ -411,8 +405,6 @@ class Game:
         else:
             f.write(F"\nPlayer 2: H\n")
 
-        total_moves_x = 0
-        total_moves_o = 0
         total_moves = 0
 
         evaluation_time = 0
